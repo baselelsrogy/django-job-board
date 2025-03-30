@@ -5,6 +5,11 @@ JOB_TYPE = (
     ('Part Time','Part Time'),
 )
 
+# create function to upload image
+def image_upload(instance, filename):
+    image_name, extension = filename.split(".")
+    return f"jobs/{instance.id}.{extension}"
+
 # Create your models here.
 class Job(models.Model): # table
     title = models.CharField(max_length=100) # column
@@ -16,6 +21,8 @@ class Job(models.Model): # table
     salary = models.IntegerField(default=0)
     experience = models.IntegerField(default=1)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=image_upload)
+
 
 
     def __str__(self):
